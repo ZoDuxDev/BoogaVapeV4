@@ -221,7 +221,7 @@ do
 				Name = "Main",
 				BackgroundTransparency = 1,
 				Position = UDim2.new(0.25, 0, 0.052435593, 0),
-				Size = UDim2.new(0, 911, 0, 428),
+				Size = UDim2.new(0, 611, 0, 428),
 				Image = "rbxassetid://4641149554",
 				ImageColor3 = themes.Background,
 				ScaleType = Enum.ScaleType.Slice,
@@ -292,6 +292,18 @@ do
 				})
 			})
 		})
+		
+		local ImageLabel = Instance.new("ImageLabel")
+
+		ImageLabel.Parent = game.CoreGui[title].Main
+		ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		ImageLabel.BackgroundTransparency = 1.000
+		ImageLabel.Position = UDim2.new(1.02127659, 0, 0, 0)
+		ImageLabel.Size = UDim2.new(0.577741385, 0, 1, 0)
+		ImageLabel.Image = "rbxassetid://4641149554"
+		ImageLabel.ImageColor3 = themes.Background
+		ImageLabel.ScaleType = Enum.ScaleType.Slice
+		ImageLabel.SliceCenter = Rect.new(4, 4, 296, 296)
 
 		utility:InitializeKeybind()
 		utility:DraggingEnabled(container.Main.TopBar, container.Main)
