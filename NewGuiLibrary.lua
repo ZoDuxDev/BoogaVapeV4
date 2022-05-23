@@ -18,6 +18,18 @@ local function GetURL(scripturl)
 		return res
 	end
 end
+local function GetURL2(scripturl)
+	if shared.VapeDeveloper then
+		if not betterisfile("vape/"..scripturl) then
+			error("File not found : vape/"..scripturl)
+		end
+		return readfile("vape/"..scripturl)
+	else
+		local res = game:HttpGet(scripturl, true)
+		assert(res ~= "404: Not Found", "File not found")
+		return res
+	end
+end
 local getasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
 local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or request or function(tab)
@@ -97,7 +109,7 @@ if isfolder("vape/assets") == false then
 	makefolder("vape/assets")
 end
 
-local GuiLibrary =loadstring(game:HttpGet("https://raw.githubusercontent.com/ZoDuxDev/BoogaVapeV4/main/NewGuiLibrary.lua", true))()
+local GuiLibrary = loadstring(GetURL2("https://raw.githubusercontent.com/ZoDuxDev/BoogaVapeV4/main/NewGuiLibrary.lua"))()
 local translations = {}--loadstring(GetURL("translations/"..GuiLibrary["Language"]..".vapetranslation"))()
 local translatedlogo = false--pcall(function() return GetURL("translations/"..GuiLibrary["Language"].."/VapeLogo1.png") end)
 
