@@ -109,7 +109,7 @@ if isfolder("vape/assets") == false then
 	makefolder("vape/assets")
 end
 
-local GuiLibrary = loadstring(GetURL2("https://raw.githubusercontent.com/ZoDuxDev/BoogaVapeV4/main/NewGuiLibrary.lua"))()
+local GuiLibrary = loadstring(GetURL("NewGuiLibrary.lua"))()
 local translations = {}--loadstring(GetURL("translations/"..GuiLibrary["Language"]..".vapetranslation"))()
 local translatedlogo = false--pcall(function() return GetURL("translations/"..GuiLibrary["Language"].."/VapeLogo1.png") end)
 
