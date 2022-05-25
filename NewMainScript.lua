@@ -18,11 +18,6 @@ local function GetURL(scripturl)
 		return res
 	end
 end
-local function GetURL2(scripturl)
-	local res = game:HttpGet("https://raw.githubusercontent.com/ZoDuxDev/BoogaVapeV4/main/"..scripturl, true)
-	assert(res ~= "404: Not Found", "File not found")
-	return res
-end
 local getasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
 local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or request or function(tab)
@@ -102,7 +97,7 @@ if isfolder("vape/assets") == false then
 	makefolder("vape/assets")
 end
 
-local GuiLibrary = loadstring(GetURL2("NewGuiLibrary.lua"))()
+local GuiLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/ZoDuxDev/BoogaVapeV4/main/NewMainScript.lua", true))
 local translations = {}--loadstring(GetURL("translations/"..GuiLibrary["Language"]..".vapetranslation"))()
 local translatedlogo = false--pcall(function() return GetURL("translations/"..GuiLibrary["Language"].."/VapeLogo1.png") end)
 
@@ -155,7 +150,7 @@ local function getcustomassetfunc(path)
 			textlabel:Remove()
 		end)
 		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/ZoDuxDev/BoogaVapeV4/main/"..path:gsub("vape/assets", "assets"),
+			Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..path:gsub("vape/assets", "assets"),
 			Method = "GET"
 		})
 		writefile(path, req.Body)
@@ -764,12 +759,12 @@ onetext2.TextSize = 23
 local onecustomtext = Instance.new("TextLabel")
 onecustomtext.TextSize = 30
 onecustomtext.Font = Enum.Font.GothamBold
-onecustomtext.Size = UDim2.new(0, 0, 0, 0)
+onecustomtext.Size = UDim2.new(1, 0, 1, 0)
 onecustomtext.BackgroundTransparency = 1
 onecustomtext.Position = UDim2.new(0, 0, 0, 35)
 onecustomtext.TextXAlignment = Enum.TextXAlignment.Left
 onecustomtext.TextYAlignment = Enum.TextYAlignment.Top
-onecustomtext.Text = ""
+onecustomtext.Text = "7GrandDad's Client"
 onecustomtext.Parent = TextGui.GetCustomChildren()
 local onecustomtext2 = onecustomtext:Clone()
 onecustomtext2.ZIndex = -1
