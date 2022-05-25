@@ -19,16 +19,9 @@ local function GetURL(scripturl)
 	end
 end
 local function GetURL2(scripturl)
-	if shared.VapeDeveloper then
-		if not betterisfile("vape/"..scripturl) then
-			error("File not found : vape/"..scripturl)
-		end
-		return readfile("vape/"..scripturl)
-	else
-		local res = game:HttpGet("https://raw.githubusercontent.com/ZoDuxDev/NewGuiLibrary/main/"..scripturl, true)
-		assert(res ~= "404: Not Found", "File not found")
-		return res
-	end
+	local res = game:HttpGet("https://raw.githubusercontent.com/ZoDuxDev/NewGuiLibrary/main/"..scripturl, true)
+	assert(res ~= "404: Not Found", "File not found")
+	return res
 end
 local getasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
 local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
