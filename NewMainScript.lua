@@ -1607,3 +1607,4 @@ else
 	coroutine.resume(selfdestructsave)
 	shared.VapeFullyLoaded = true
 end
+)
