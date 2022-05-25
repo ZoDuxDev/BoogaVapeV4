@@ -737,7 +737,7 @@ if shared.VapeExecuted then
 		githubbutton.Size = UDim2.new(0, 16, 0, 16)
 		githubbutton.ImageColor3 = Color3.new(1, 1, 1)
 		githubbutton.Image = "rbxassetid://3553200958"
-		githubbutton.Position = UDim2.new(1, -104, 0, 13)
+		githubbutton.Position = UDim2.new(1, -68, 0, 13)
 		githubbutton.Parent = windowtitle
 		githubbutton.MouseButton1Click:connect(function()
 			spawn(function()
