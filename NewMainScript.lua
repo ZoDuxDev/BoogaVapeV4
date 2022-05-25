@@ -18,6 +18,18 @@ local function GetURL(scripturl)
 		return res
 	end
 end
+local function GetURL2(scripturl)
+	if shared.VapeDeveloper then
+		if not betterisfile("vape/"..scripturl) then
+			error("File not found : vape/"..scripturl)
+		end
+		return readfile("vape/"..scripturl)
+	else
+		local res = game:HttpGet("https://raw.githubusercontent.com/ZoDuxDev/NewGuiLibrary/main/"..scripturl, true)
+		assert(res ~= "404: Not Found", "File not found")
+		return res
+	end
+end
 local getasset = getsynasset or getcustomasset or function(location) return "rbxasset://"..location end
 local queueteleport = syn and syn.queue_on_teleport or queue_on_teleport or fluxus and fluxus.queue_on_teleport or function() end
 local requestfunc = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or request or function(tab)
@@ -97,7 +109,7 @@ if isfolder("vape/assets") == false then
 	makefolder("vape/assets")
 end
 
-local GuiLibrary = loadstring(GetURL("NewGuiLibrary.lua"))()
+local GuiLibrary = loadstring(GetURL2("NewGuiLibrary.lua"))()
 local translations = {}--loadstring(GetURL("translations/"..GuiLibrary["Language"]..".vapetranslation"))()
 local translatedlogo = false--pcall(function() return GetURL("translations/"..GuiLibrary["Language"].."/VapeLogo1.png") end)
 
@@ -150,7 +162,7 @@ local function getcustomassetfunc(path)
 			textlabel:Remove()
 		end)
 		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..path:gsub("vape/assets", "assets"),
+			Url = "https://raw.githubusercontent.com/ZoDuxDev/BoogaVapeV4/main/"..path:gsub("vape/assets", "assets"),
 			Method = "GET"
 		})
 		writefile(path, req.Body)
@@ -706,7 +718,7 @@ onething.BackgroundColor3 = Color3.new(0, 0, 0)
 onething.BorderSizePixel = 0
 onething.BackgroundTransparency = 1
 onething.Visible = false
-onething.Image = "rbxassetid://9710349723"
+onething.Image = getcustomassetfunc(translatedlogo and "vape/translations/"..GuiLibrary["Language"].."/VapeLogo3.png" or "vape/assets/VapeLogo3.png")
 local onething2 = Instance.new("ImageLabel")
 onething2.Parent = onething
 onething2.Size = UDim2.new(0, 41, 0, 24)
@@ -715,7 +727,7 @@ onething2.Position = UDim2.new(1, 0, 0, 1)
 onething2.BorderSizePixel = 0
 onething2.BackgroundColor3 = Color3.new(0, 0, 0)
 onething2.BackgroundTransparency = 1
-onething2.Image = "rbxassetid://9710459249"
+onething2.Image = getcustomassetfunc("vape/assets/VapeLogo4.png")
 local onething3 = onething:Clone()
 onething3.ImageColor3 = Color3.new(0, 0, 0)
 onething3.ImageTransparency = 0.5
@@ -759,12 +771,12 @@ onetext2.TextSize = 23
 local onecustomtext = Instance.new("TextLabel")
 onecustomtext.TextSize = 30
 onecustomtext.Font = Enum.Font.GothamBold
-onecustomtext.Size = UDim2.new(1, 0, 1, 0)
+onecustomtext.Size = UDim2.new(0, 0, 0, 0)
 onecustomtext.BackgroundTransparency = 1
 onecustomtext.Position = UDim2.new(0, 0, 0, 35)
 onecustomtext.TextXAlignment = Enum.TextXAlignment.Left
 onecustomtext.TextYAlignment = Enum.TextYAlignment.Top
-onecustomtext.Text = "7GrandDad's Client"
+onecustomtext.Text = ""
 onecustomtext.Parent = TextGui.GetCustomChildren()
 local onecustomtext2 = onecustomtext:Clone()
 onecustomtext2.ZIndex = -1
@@ -1156,8 +1168,57 @@ GUI.CreateCustomToggle({
 	["Priority"] = 1
 })
 local GeneralSettings = GUI.CreateDivider2("General Settings")
+local ModuleSettings = GUI.CreateDivider2("Module Settings")
 local GUISettings = GUI.CreateDivider2("GUI Settings")
+ModuleSettings.CreateToggle({
+	["Name"] = "Teams by server", 
+	["Function"] = function() end,
+})
+ModuleSettings.CreateToggle({
+	["Name"] = "Teams by color", 
+	["Function"] = function() end,
+	["Default"] = true,
+	["HoverText"] = "Ignore players with the selected name color"
+})
+local MiddleClickInput
+ModuleSettings.CreateToggle({
+	["Name"] = "MiddleClick friends", 
+	["Function"] = function(callback) 
+		if callback then
+			MiddleClickInput = game:GetService("UserInputService").InputBegan:connect(function(input1)
+				if input1.UserInputType == Enum.UserInputType.MouseButton3 then
+					if mouse.Target.Parent:FindFirstChild("HumanoidRootPart") or mouse.Target.Parent:IsA("Accessory") and mouse.Target.Parent.Parent:FindFirstChild("HumanoidRootPart") then
+						local user = (mouse.Target.Parent:IsA("Accessory") and mouse.Target.Parent.Parent.Name or mouse.Target.Parent.Name)
+						if table.find(FriendsTextList["ObjectList"], user) == nil then
+							table.insert(FriendsTextList["ObjectList"], user)
+							FriendsTextList["RefreshValues"](FriendsTextList["ObjectList"])
+						else
+							table.remove(FriendsTextList["ObjectList"], table.find(FriendsTextList["ObjectList"], user)) 
+							FriendsTextList["RefreshValues"](FriendsTextList["ObjectList"])
+						end
+					end
+				end
+			end)
+		else
+			if MiddleClickInput then
+				MiddleClickInput:Disconnect()
+			end
+		end
+	end,
+	["HoverText"] = "Click middle mouse button to add the player you are hovering over as a friend"
+})
+ModuleSettings.CreateToggle({
+	["Name"] = "Lobby Check",
+	["Function"] = function() end,
+	["Default"] = true,
+	["HoverText"] = "Temporarily disables certain features in server lobbies."
+})
 guicolorslider = GUI.CreateColorSlider("GUI Theme", function(val) GuiLibrary["Settings"]["GUIObject"]["Color"] = val GuiLibrary["UpdateUI"]() end)
+local blatantmode = GUI.CreateToggle({
+	["Name"] = "Blatant mode",
+	["Function"] = function() end,
+	["HoverText"] = "Required for certain features."
+})
 local tabsortorder = {
 	["CombatButton"] = 1,
 	["BlatantButton"] = 2,
@@ -1412,6 +1473,18 @@ GuiLibrary["SelfDestruct"] = function()
 	GuiLibrary["MainBlur"]:Remove()
 end
 
+GeneralSettings.CreateButton2({
+	["Name"] = "RESET CURRENT PROFILE", 
+	["Function"] = function()
+		local vapeprivate = shared.VapePrivate
+		GuiLibrary["SelfDestruct"]()
+		delfile(customdir.."Profiles/"..(GuiLibrary["CurrentProfile"] == "default" and "" or GuiLibrary["CurrentProfile"])..game.PlaceId..".vapeprofile.txt")
+		shared.VapeSwitchServers = true
+		shared.VapeOpenGui = true
+		shared.VapePrivate = vapeprivate
+		loadstring(GetURL("NewMainScript.lua"))()
+	end
+})
 GUISettings.CreateButton2({
 	["Name"] = "RESET GUI POSITIONS", 
 	["Function"] = function()
@@ -1464,7 +1537,7 @@ GUISettings.CreateButton2({
 		end
 	end
 })
-GUISettings.CreateButton2({
+GeneralSettings.CreateButton2({
 	["Name"] = "UNINJECT",
 	["Function"] = GuiLibrary["SelfDestruct"]
 })
