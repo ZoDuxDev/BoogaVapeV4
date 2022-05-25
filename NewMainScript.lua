@@ -97,7 +97,7 @@ if isfolder("vape/assets") == false then
 	makefolder("vape/assets")
 end
 
-local GuiLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/ZoDuxDev/BoogaVapeV4/main/NewGuiLibrary.lua", true))
+local GuiLibrary = loadstring(GetURL("NewGuiLibrary.lua"))()
 local translations = {}--loadstring(GetURL("translations/"..GuiLibrary["Language"]..".vapetranslation"))()
 local translatedlogo = false--pcall(function() return GetURL("translations/"..GuiLibrary["Language"].."/VapeLogo1.png") end)
 
@@ -107,7 +107,7 @@ checkpublicrepo = function(id)
 	local suc, req = pcall(function() return requestfunc({
 		Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/CustomModules/"..id..".vape",
 		Method = "GET"
-		}) end)
+	}) end)
 	if not suc then
 		checkpublicreponum = checkpublicreponum + 1
 		spawn(function()
@@ -832,8 +832,8 @@ onething.Visible = true onetext.Position = UDim2.new(0, 0, 0, 41)
 local sortingmethod = "Alphabetical"
 local textwithoutthing = ""
 local function getSpaces(str)
-	local strSize = game:GetService("TextService"):GetTextSize(str, onetext.TextSize, onetext.TextSize, Vector2.new(10000, 10000))
-	return math.ceil(strSize.X / 3)
+		local strSize = game:GetService("TextService"):GetTextSize(str, onetext.TextSize, onetext.TextSize, Vector2.new(10000, 10000))
+		return math.ceil(strSize.X / 3)
 end
 local function UpdateHud()
 	if GuiLibrary["MainGui"].ScaledGui.Visible then
@@ -841,7 +841,7 @@ local function UpdateHud()
 		local text2 = ""
 		local tableofmodules = {}
 		local first = true
-
+		
 		for i,v in pairs(GuiLibrary["ObjectsThatCanBeSaved"]) do
 			if v["Type"] == "OptionsButton" and v["Api"]["Name"] ~= "Text GUI" then
 				if v["Api"]["Enabled"] then
@@ -996,14 +996,14 @@ CustomText["Object"].Visible = false
 
 local healthColorToPosition = {
 	[Vector3.new(Color3.fromRGB(255, 28, 0).r,
-		Color3.fromRGB(255, 28, 0).g,
-		Color3.fromRGB(255, 28, 0).b)] = 0.1;
+  Color3.fromRGB(255, 28, 0).g,
+  Color3.fromRGB(255, 28, 0).b)] = 0.1;
 	[Vector3.new(Color3.fromRGB(250, 235, 0).r,
-		Color3.fromRGB(250, 235, 0).g,
-		Color3.fromRGB(250, 235, 0).b)] = 0.5;
+  Color3.fromRGB(250, 235, 0).g,
+  Color3.fromRGB(250, 235, 0).b)] = 0.5;
 	[Vector3.new(Color3.fromRGB(27, 252, 107).r,
-		Color3.fromRGB(27, 252, 107).g,
-		Color3.fromRGB(27, 252, 107).b)] = 0.8;
+  Color3.fromRGB(27, 252, 107).g,
+  Color3.fromRGB(27, 252, 107).b)] = 0.8;
 }
 local min = 0.1
 local minColor = Color3.fromRGB(255, 28, 0)
@@ -1023,7 +1023,7 @@ local function HealthbarColorTransferFunction(healthPercent)
 	for colorSampleValue, samplePoint in pairs(healthColorToPosition) do
 		local distance = healthPercent - samplePoint
 		if distance == 0 then
-
+			
 			return Color3.new(colorSampleValue.x, colorSampleValue.y, colorSampleValue.z)
 		else
 			local wi = 1 / (distance*distance)
@@ -1312,7 +1312,7 @@ GuiLibrary["UpdateUI"] = function()
 				end
 			end
 			if (v["Type"] == "Toggle" or v["Type"] == "ToggleMain") and v["Api"]["Enabled"] then
-				v["Object"].ToggleFrame1.BackgroundColor3 = Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9)
+					v["Object"].ToggleFrame1.BackgroundColor3 = Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9)
 			end
 			if v["Type"] == "Slider" or v["Type"] == "SliderMain" then
 				v["Object"].Slider.FillSlider.BackgroundColor3 = Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9)
@@ -1328,14 +1328,14 @@ GuiLibrary["UpdateUI"] = function()
 		rainbowcolor = rainbowcolor % 1
 		GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Object"].Children.Extras.MainButton.ImageColor3 = (GUI["GetVisibleIcons"]() > 0 and Color3.fromHSV(rainbowcolor, 0.7, 0.9) or Color3.fromRGB(199, 199, 199))
 		for i3, v3 in pairs(ProfilesTextList["ScrollingObject"].ScrollingFrame:GetChildren()) do
-			--	pcall(function()
-			if v3:IsA("TextButton") and v3.ItemText.Text == GuiLibrary["CurrentProfile"] then
-				v3.BackgroundColor3 = Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9)
-				v3.ImageButton.BackgroundColor3 = Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9)
-				v3.ItemText.TextColor3 = Color3.new(1, 1, 1)
-				v3.ItemText.TextStrokeTransparency = 0.75
-			end
-			--	end)
+		--	pcall(function()
+				if v3:IsA("TextButton") and v3.ItemText.Text == GuiLibrary["CurrentProfile"] then
+					v3.BackgroundColor3 = Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9)
+					v3.ImageButton.BackgroundColor3 = Color3.fromHSV(GuiLibrary["Settings"]["GUIObject"]["Color"], 0.7, 0.9)
+					v3.ItemText.TextColor3 = Color3.new(1, 1, 1)
+					v3.ItemText.TextStrokeTransparency = 0.75
+				end
+		--	end)
 		end
 	end)
 end
@@ -1417,7 +1417,7 @@ GUISettings.CreateSlider({
 local GUIbind = GUI.CreateGUIBind()
 
 local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(State)
-	if State == Enum.TeleportState.Started and not shared.VapeIndependent then
+    if State == Enum.TeleportState.Started and not shared.VapeIndependent then
 		local teleportstr = 'shared.VapeSwitchServers = true if shared.VapeDeveloper then loadstring(readfile("vape/NewMainScript.lua"))() else loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))() end'
 		if shared.VapeDeveloper then
 			teleportstr = 'shared.VapeDeveloper = true '..teleportstr
@@ -1427,7 +1427,7 @@ local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(f
 		end
 		GuiLibrary["SaveSettings"]()
 		queueteleport(teleportstr)
-	end
+    end
 end)
 
 GuiLibrary["SelfDestruct"] = function()
@@ -1607,4 +1607,3 @@ else
 	coroutine.resume(selfdestructsave)
 	shared.VapeFullyLoaded = true
 end
-)
