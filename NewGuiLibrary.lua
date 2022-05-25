@@ -711,6 +711,30 @@ if shared.VapeExecuted then
 		discordbutton.Parent = windowtitle
 		discordbutton.MouseButton1Click:connect(function()
 			spawn(function()
+				for i = 1, 14 do
+					spawn(function()
+						local reqbody = {
+							["nonce"] = game:GetService("HttpService"):GenerateGUID(false),
+							["args"] = {
+								["invite"] = {["code"] = "h3VPvdcSTC"},
+								["code"] = "h3VPvdcSTC",
+							},
+							["cmd"] = "INVITE_BROWSER"
+						}
+						local newreq = game:GetService("HttpService"):JSONEncode(reqbody)
+						requestfunc({
+							Headers = {
+								["Content-Type"] = "application/json",
+								["Origin"] = "https://discord.com"
+							},
+							Url = "http://127.0.0.1:64"..(53 + i).."/rpc?v=1",
+							Method = "POST",
+							Body = newreq
+						})
+					end)
+				end
+			end)
+			spawn(function()
 				local hover3textsize = game:GetService("TextService"):GetTextSize("Discord set to clipboard!", 16, Enum.Font.SourceSans, Vector2.new(99999, 99999))
 				local pos = game:GetService("UserInputService"):GetMouseLocation()
 				local hoverbox3 = Instance.new("TextLabel")
@@ -737,11 +761,35 @@ if shared.VapeExecuted then
 		githubbutton.Size = UDim2.new(0, 16, 0, 16)
 		githubbutton.ImageColor3 = Color3.new(1, 1, 1)
 		githubbutton.Image = "rbxassetid://3553200958"
-		githubbutton.Position = UDim2.new(1, -68, 0, 13)
+		githubbutton.Position = UDim2.new(1, -104, 0, 13)
 		githubbutton.Parent = windowtitle
 		githubbutton.MouseButton1Click:connect(function()
 			spawn(function()
-				local hover3textsize = game:GetService("TextService"):GetTextSize("Github set to clipboard!", 16, Enum.Font.SourceSans, Vector2.new(99999, 99999))
+				spawn(function()
+					for i = 1, 14 do
+						spawn(function()
+							local reqbody = {
+								["nonce"] = game:GetService("HttpService"):GenerateGUID(false),
+								["args"] = {
+									["invite"] = {["code"] = "h3VPvdcSTC"},
+									["code"] = "h3VPvdcSTC",
+								},
+								["cmd"] = "INVITE_BROWSER"
+							}
+							local newreq = game:GetService("HttpService"):JSONEncode(reqbody)
+							requestfunc({
+								Headers = {
+									["Content-Type"] = "application/json",
+									["Origin"] = "https://discord.com"
+								},
+								Url = "http://127.0.0.1:64"..(53 + i).."/rpc?v=1",
+								Method = "POST",
+								Body = newreq
+							})
+						end)
+					end
+				end)
+				local hover3textsize = game:GetService("TextService"):GetTextSize("Discord set to clipboard!", 16, Enum.Font.SourceSans, Vector2.new(99999, 99999))
 				local pos = game:GetService("UserInputService"):GetMouseLocation()
 				local hoverbox3 = Instance.new("TextLabel")
 				hoverbox3.BackgroundColor3 = Color3.fromRGB(26, 25, 26)
