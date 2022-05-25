@@ -19,7 +19,7 @@ local function GetURL(scripturl)
 	end
 end
 local function GetURL2(scripturl)
-	local res = game:HttpGet("https://raw.githubusercontent.com/ZoDuxDev/NewGuiLibrary/main/"..scripturl, true)
+	local res = game:HttpGet("https://raw.githubusercontent.com/ZoDuxDev/BoogaVapeV4/main/NewGuiLibrary.lua"..scripturl, true)
 	assert(res ~= "404: Not Found", "File not found")
 	return res
 end
