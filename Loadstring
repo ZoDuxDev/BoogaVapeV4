@@ -1,1 +1,1 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/GoldenSnailDev/BoogaVapeV4/main/Module"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ZoDuxDev/BoogaVapeV4/main/Module"))()
